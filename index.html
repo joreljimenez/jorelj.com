@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    /* AUTH GUARD */
+    (function () {
+      var COOKIE_NAME   = 'jj_auth';
+      var PASSWORD_HASHES = [
+        '8529ab6899015263573df683e57a9de269d60d38f9a5493152e1f53e8c5c2730', // mitchell
+        // add more hashes here
+      ];
+      var LOGIN_URL     = '/login.html';
+      function getCookie(name) {
+        var pairs = document.cookie.split(';');
+        for (var i = 0; i < pairs.length; i++) {
+          var pair = pairs[i].trim().split('=');
+          if (pair[0] === name) return pair[1] || '';
+        }
+        return null;
+      }
+      if (PASSWORD_HASHES.indexOf(getCookie(COOKIE_NAME)) === -1) {
+        window.location.replace(LOGIN_URL);
+        throw new Error('Unauthenticated');
+      }
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jorel Jimenez — DevOps & Full-Stack Engineer</title>
